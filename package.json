@@ -1,0 +1,30 @@
+{
+  "name": "ilmatar-bot",
+  "version": "0.8.0",
+  "description": "Discord bot",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Toni Lappalainen",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv-flow": "^3.2.0",
+    "enmap": "^5.8.5",
+    "jsonfile": "^6.1.0",
+    "lastfmapi": "^0.1.1",
+    "luxon": "^1.27.0",
+    "markov-strings": "^3.0.1",
+    "mongoose": "^5.12.13",
+    "node-fetch": "^2.6.1",
+    "querystring": "^0.2.1",
+    "r2": "^2.0.1",
+    "simple-youtube-api": "^5.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-plugin-radar": "^0.2.1",
+    "prettier": "^2.3.0"
+  }
+}
