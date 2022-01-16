@@ -1,10 +1,18 @@
-import { Client, Message } from 'discord.js';
+import { Client, Message, GuildMember } from 'discord.js';
 import { config } from './../config';
+import {
+	getProfile,
+	getProfiles,
+	createProfile,
+	updateProfile,
+} from '../database/profiles';
+import { getGuilds } from '../database/guilds';
+import { ProfileModel } from './../database/models/models';
 
 const message = {
 	name: 'messageCreate',
 	once: false,
-	execute(client: Client, ...args: Message[]) {
+	execute: async (client: Client, ...args: Message[]) => {
 		const msg = args[0];
 		// use this if you don't want to use responds in DMs
 		//	if (!msg.guild) return;
@@ -15,7 +23,11 @@ const message = {
 			(guild) => guild.id === msg.guildId
 		);
 		if (!guildSettings) return;
-
+		if (!msg.member) return;
+		//if (msg.guild) client.emit('guildCreate', msg.guild);
+		//const member = await getProfile(msg.member);
+		//console.log(member);
+		updateExperience(msg.member);
 		if (msg.content.indexOf(guildSettings.prefix) === 0) {
 			runCommand(msg, client, guildSettings);
 			return;
@@ -124,19 +136,29 @@ const log = (content) => {
 
 	CreateFiles.write(content + '\r\n');
 };
-
-const updateExperience = async (client, member, amount, msg) => {
+*/
+const updateExperience = async (member: GuildMember, amount: number = 1) => {
 	const newProfile = {
 		guildID: member.guild.id,
 		guildName: member.guild.name,
 		userID: member.id,
 		username: member.user.tag,
 	};
-	const profile = await client.getProfile(member);
-
-	if (!profile) await client.createProfile(newProfile);
-	const newAmount = profile ? profile.exp + amount : amount;
-
-	await client.updateProfile(member, { exp: newAmount });
+	let profile;
+	profile = await getProfile(member);
+	console.log(profile[0]);
+	if (profile.length === 0) {
+		try {
+			console.log('no profile');
+			await createProfile(newProfile);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+	const newAmount = profile[0] ? profile[0].exp + amount : amount;
+	try {
+		await updateProfile(member, { exp: newAmount });
+	} catch (err) {
+		console.log(err);
+	}
 };
-*/

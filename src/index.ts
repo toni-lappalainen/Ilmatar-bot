@@ -1,8 +1,11 @@
 require('dotenv-flow').config();
 import { Client, Collection, Intents } from 'discord.js';
+import { mongoInit } from './database/mongo';
 import fs from 'fs';
 import { config } from './config';
 import path from 'path';
+import { mongo } from 'mongoose';
+import { getGuild, getGuilds } from './database/guilds';
 
 const clientOptions = {
 	intents: [
@@ -18,7 +21,6 @@ const commandPath = path.resolve(__dirname, './commands');
 
 //require('./utils/functions')(client);
 
-//client.mongoose = require('./utils/mongoose');
 // config has all the individual api tokens/secrets/etc, and other settings
 // they can be in the actual config file, or loaded from .env file.
 //client.config = config;
@@ -55,6 +57,7 @@ for (const file of eventFiles) {
 	const eventFile = require(`./events/${file}`);
 	const eventName = file.split('.')[0];
 	const event = eventFile[eventName];
+	console.log(eventName);
 	console.log(`name: ${eventName} once: ${event.once}`);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
@@ -95,5 +98,6 @@ client.on('interactionCreate', async (interaction) => {
 	}
 });
 
-//client.mongoose.init();
+mongoInit();
+
 client.login(config.token);

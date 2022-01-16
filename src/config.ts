@@ -17,7 +17,7 @@ const config = {
 	defaultguildId: process.env.DEFAULTGUILD_ID ?? '',
 	defaultSettings: {
 		name: 'default',
-		prefix: process.env.PREFIX ?? '',
+		prefix: '!' ?? '',
 		welcomeChannel: 'welcome',
 		welcomeMsg: 'Welcome **{{user}}** to **{{guild}}**!',
 		modRole: 'Moderator',
@@ -28,6 +28,9 @@ const config = {
 			name: process.env.GUILDNAME ?? '',
 			id: process.env.DEFAULTGUILD_ID ?? '',
 			prefix: process.env.PREFIX ?? '',
+			exp: process.env.EXP ?? true,
+			welcome: process.env.WELCOME ?? false,
+			welcomeChannel: process.env.WELCOME_CHANNEL ?? '',
 		},
 	],
 };
