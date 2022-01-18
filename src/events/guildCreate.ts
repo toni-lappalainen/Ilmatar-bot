@@ -1,16 +1,12 @@
 // Create new server entry into the database
 import { Guild, Client } from 'discord.js';
-import { config } from './../config';
-import { createGuild } from './../database/guilds';
+import { createGuild } from './../database/models/guild';
 
-const guildCreate = {
+module.exports = {
 	name: 'guildCreate',
 	once: false,
 	execute: async (client: Client, ...args: Guild[]) => {
 		const guild = args[0];
-		const guildSettings = config.guildSettings.find(
-			(settingsGuild) => settingsGuild.id === guild.id
-		);
 
 		const newGuild = {
 			guildID: guild.id,
@@ -25,4 +21,3 @@ const guildCreate = {
 		}
 	},
 };
-export { guildCreate };

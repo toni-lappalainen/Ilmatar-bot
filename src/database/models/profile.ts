@@ -1,6 +1,8 @@
-import { Schema, model, Document, SchemaDefinition } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { GuildMember } from 'discord.js';
 
-interface Profile {
+interface IProfile {
+	[key: string]: any;
 	guildID: string;
 	guildName: string;
 	userID: string;
@@ -11,17 +13,7 @@ interface Profile {
 	//	boosters: [{ name: String; time: String }];
 }
 
-/*interface ProfileBaseDocument extends Profile, Document {
-	friends: Types.Array<string>;
-	creditCards?: Types.Map<string>;
-	fullName: string;
-	getGender(): string;
-}*/
-
-// Export this for strong typing
-//export interface UserDocument extends Profile, Document {}
-
-const profileSchema = new Schema<Profile>(
+const profileSchema = new Schema<IProfile>(
 	{
 		guildID: String,
 		guildName: String,
@@ -42,6 +34,67 @@ const profileSchema = new Schema<Profile>(
 		timestamps: true,
 	}
 );
-const ProfileModel = model<Profile>('Profile', profileSchema);
+const ProfileModel = model<IProfile>('Profile', profileSchema);
 
-export { ProfileModel, Profile };
+const createProfile = async (profile: any) => {
+	console.log('adsasd' + profile);
+	const newProfile = new ProfileModel(profile);
+	try {
+		await newProfile.save();
+		console.log('asda' + newProfile);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+const getProfiles = async () => {
+	try {
+		const data = await ProfileModel.find({});
+		return data;
+	} catch (err) {
+		return 'error occured';
+	}
+};
+
+const getProfile = async (user: GuildMember) => {
+	//console.log("userID: " + user.id);
+	//const data = await Guild.findOne({ userID: user.id });
+	//	console.log(user);
+	const data = await ProfileModel.find({ userID: user.id });
+	return data;
+};
+
+const updateProfile = async (user: GuildMember, data: any) => {
+	try {
+		const res = await getProfile(user);
+		const profile = res[0];
+
+		Object.keys(data).forEach((key) => {
+			if (profile[key as keyof IProfile] !== data[key as keyof IProfile])
+				profile[key as keyof IProfile] = data[key as keyof IProfile];
+		});
+		profile.save();
+		console.log(profile);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+const clean = (text: any) => {
+	if (typeof text === 'string') {
+		return text
+			.replace(/`/g, '`' + String.fromCharCode(8203))
+			.replace(/@/g, '@' + String.fromCharCode(8203));
+	} else {
+		return text;
+	}
+};
+
+export {
+	ProfileModel,
+	IProfile,
+	createProfile,
+	getProfile,
+	getProfiles,
+	updateProfile,
+};

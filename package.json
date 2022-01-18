@@ -5,12 +5,14 @@
 	"main": "index.js",
 	"type": "commonjs",
 	"scripts": {
-		"start": "ts-node --files ./src/index.ts",
-		"start2": "node --loader ts-node/esm ./src/index.ts"
+		"dev": "ts-node --files ./src/index.ts",
+		"start": "node dist/index.js",
+		"build": "tsc"
 	},
 	"author": "Toni Lappalainen",
 	"license": "MIT",
 	"dependencies": {
+		"@types/dotenv-flow": "^3.2.0",
 		"discord.js": "^13.6.0",
 		"dotenv-flow": "^3.2.0",
 		"enmap": "^5.8.7",
@@ -18,7 +20,8 @@
 		"lastfmapi": "^0.1.1",
 		"luxon": "^2.3.0",
 		"markov-strings": "^3.0.1",
-		"mongoose": "^6.1.6",
+		"mongodb": "^4.3.0",
+		"mongoose": "^6.1.7",
 		"node-fetch": "^3.1.0",
 		"r2": "^2.0.1",
 		"simple-youtube-api": "^5.2.1"
@@ -26,10 +29,9 @@
 	"devDependencies": {
 		"@discordjs/builders": "^0.11.0",
 		"@discordjs/rest": "^0.2.0-canary.0",
-		"@types/node": "^17.0.8",
+		"@types/node": "^16.11.7",
 		"discord-api-types": "^0.26.1",
 		"eslint": "^8.6.0",
-		"eslint-plugin-radar": "^0.2.1",
 		"prettier": "^2.5.1",
 		"ts-node": "^10.4.0"
 	}

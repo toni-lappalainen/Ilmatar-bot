@@ -31,6 +31,7 @@ const config = {
 			exp: process.env.EXP ?? true,
 			welcome: process.env.WELCOME ?? false,
 			welcomeChannel: process.env.WELCOME_CHANNEL ?? '',
+			database: process.env.DATABASE ?? false,
 		},
 	],
 };

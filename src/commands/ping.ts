@@ -5,5 +5,5 @@ exports.execute = (client: Client, msg: Message, args: any, settings: any) => {
 };
 
 exports.help = {
-	name: 'test',
+	name: 'ping',
 };

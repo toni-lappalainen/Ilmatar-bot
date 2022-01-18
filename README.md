@@ -1,17 +1,29 @@
 # Ilmatar Bot
 
-Ilmatar is a discord bot with various functions.
-This is the public version of already working private implementation. The full feature set is coming in the future. 
+Ilmatar is a simple discord bot.
+This is a public version of a private bot, which has more functions that are being added here as well.
 
 ## Installation & Usage
 
-Clone the project on your server and run the main.js file
+Clone the project on your server.
+For testing, use ts-node:
 
+````bash
+npm run dev
+// or
+ts-node --files ./src/index.ts
+
+To build and run the app:
 ```bash
-node main.js
-// or use something like pm2
-pm2 start main.js
-```
+npm run build
+npm start
+````
+
+### Config
+
+add your settings into .env file, or directly in the config.ts. You can have different settings for every server the bot is in.
+Use the guildSettings as a basis for the different server settings.
 
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
