@@ -34,6 +34,14 @@ const config = {
 			database: process.env.DATABASE ?? false,
 		},
 	],
+	radioSettings: {
+		URL: process.env.RADIO_URL ?? '',
+		API: process.env.RADIO_API ?? '',
+		streamTitle: process.env.RADIO_STREAM_TITLE ?? '',
+		iconURL: process.env.RADIO_ICON_URL ?? '',
+		siteURL: process.env.RADIO_SITE_URL ?? '',
+		footer: process.env.RADIO_FOOTER ?? '',
+	},
 };
 
 export { config };

@@ -12,19 +12,25 @@
 	"author": "Toni Lappalainen",
 	"license": "MIT",
 	"dependencies": {
+		"@discordjs/voice": "^0.8.0",
 		"@types/dotenv-flow": "^3.2.0",
+		"@types/websocket": "^1.0.5",
+		"cross-fetch": "^3.1.5",
 		"discord.js": "^13.6.0",
 		"dotenv-flow": "^3.2.0",
 		"enmap": "^5.8.7",
+		"fetch-json": "^2.6.3",
 		"jsonfile": "^6.1.0",
 		"lastfmapi": "^0.1.1",
+		"libsodium-wrappers": "^0.7.9",
 		"luxon": "^2.3.0",
 		"markov-strings": "^3.0.1",
 		"mongodb": "^4.3.0",
 		"mongoose": "^6.1.7",
-		"node-fetch": "^3.1.0",
+		"nchan": "^1.0.10",
 		"r2": "^2.0.1",
-		"simple-youtube-api": "^5.2.1"
+		"simple-youtube-api": "^5.2.1",
+		"websocket": "^1.0.34"
 	},
 	"devDependencies": {
 		"@discordjs/builders": "^0.11.0",

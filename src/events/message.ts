@@ -35,10 +35,8 @@ const runCommand = (msg: Message, client: Client, settings: any) => {
 	const args = msg.content.slice(settings.prefix.length).split(' ');
 	const commandArg = args.shift()?.toLowerCase();
 
+	if (!client.commands.has(commandArg)) return;
 	let command = client.commands.get(commandArg);
-	if (!command) {
-		command = client.commands.get('other');
-	}
 
 	command.execute(client, msg, args, settings);
 };
