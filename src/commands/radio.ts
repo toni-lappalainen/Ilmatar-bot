@@ -5,6 +5,7 @@ import {
 	MessageActionRow,
 	MessageButton,
 	VoiceChannel,
+	ColorResolvable,
 } from 'discord.js';
 import fetch from 'cross-fetch';
 import { config } from './../config';
@@ -19,6 +20,7 @@ import {
 	entersState,
 	getVoiceConnection,
 } from '@discordjs/voice';
+import { getMainColor } from '../utils/images';
 
 // Implementation for playing audio stream from internet radio
 // This version is made to use with AzuraCast-based stream,
@@ -55,7 +57,8 @@ exports.execute = async (
 		} catch (error) {
 			console.error(error);
 		}
-	} else if (player.state.status === 'idle') {
+	}
+	if (player.state.status === 'idle') {
 		msg.reply('No audio playing. Use !radio init to start.');
 		return;
 	}
@@ -175,7 +178,7 @@ const getMetadata = async (client: Client, msg: Message) => {
 	}
 };
 
-const sendSongInfo = (msg: Message, level: number) => {
+const sendSongInfo = async (msg: Message, level: number) => {
 	if (level === 0) return;
 	else if (level === 1) {
 		msg.channel.send(`now playing: **${songInfo.text}** `);
@@ -184,13 +187,20 @@ const sendSongInfo = (msg: Message, level: number) => {
 			`now playing: **${songInfo.text}** from **${songInfo.album}**. Bandcamp: <${songInfo.link}>`
 		);
 	} else if (level === 3 || level === 4) {
-		msg.channel.send(createEmbed(songInfo));
+		const embed = await createEmbed(songInfo);
+		msg.channel.send(embed);
 	}
 };
 
-const createEmbed = (info: any) => {
+const createEmbed = async (info: any) => {
+	let color: ColorResolvable = 'AQUA';
+	await getMainColor(info.art).then((hexValue) => {
+		color = `#${hexValue}`;
+	});
+
+	//	getMainColor(color);
 	const songInfoEmbed = new MessageEmbed()
-		.setColor('#1F8B4C')
+		.setColor(color)
 		.setTitle(info.text)
 		.setURL(info.link)
 		.setAuthor({
