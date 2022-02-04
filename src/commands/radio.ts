@@ -33,7 +33,7 @@ const APICallInterval = 20000;
 let connection: VoiceConnection;
 let apiCall: any = null;
 let lastSong: string = '';
-// 0 = no info, 1 = basic, 2 = full, 3 = embed
+// 0 = no info, 1 = basic, 2 = full, 3 = embed with thumbnail, 4 = embed with image
 let infoLevel = 4;
 let songInfo: any = {};
 
@@ -44,6 +44,10 @@ exports.execute = async (
 	settings: any
 ) => {
 	const channel: any = msg.member?.voice.channel!;
+	if (!channel) {
+		msg.reply(`Please join a voice channel first.`);
+		return;
+	}
 
 	if (args[0] === 'init' && player.state.status === 'idle') {
 		try {
