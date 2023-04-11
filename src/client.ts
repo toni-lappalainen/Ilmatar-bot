@@ -1,13 +1,15 @@
-import { Client, Collection, Intents } from 'discord.js';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
+import { Command } from './types';
 
 const clientOptions = {
 	intents: [
-		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.GUILD_MESSAGES,
-		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-		Intents.FLAGS.GUILD_VOICE_STATES,
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMessageReactions,
+		GatewayIntentBits.MessageContent,
 	],
 };
 
@@ -30,14 +32,14 @@ for (const file of eventFiles) {
 	}
 }
 
-client.commands = new Collection();
+client.commands = new Collection<string, Command>();
 const commandFiles = fs
 	.readdirSync(commandPath)
 	.filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(command.help.name, command);
+	client.commands.set(command.name, command);
 }
 
 export { client };
